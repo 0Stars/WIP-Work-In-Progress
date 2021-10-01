@@ -1,4 +1,22 @@
+noseX = 0;
+noseY = 0;
+GameStatus = "";
 
+
+function startGame()
+{
+  GameStatus = "start";
+  document.getElementById("status").innerHTML = "The game is loading. Please be patient.";
+}
+
+
+function game(){
+
+	console.log("noseX = " + noseX +"noseY = " + noseY)
+	instializeInDraw();
+	moveEnvironment(mario);
+	drawSprites();
+}
 /*=================================
 =            Variables            =
 =================================*/
@@ -67,7 +85,7 @@ function game(){
     fill(255, 255, 255);
     textSize(40);
     textAlign(CENTER);
-    text("Press Any Arrow Keys to Start and Play ", gameConfig.screenX/2, gameConfig.screenY/2);
+    text("Click the play button to start playing ", gameConfig.screenX/2, gameConfig.screenY/2);
     textSize(40);
 
     stroke(255);
@@ -90,7 +108,7 @@ function game(){
   }
 
     // if game is over 
-  if(gameConfig.status==='gameover'){
+  if(GameStatus=="start" &&noseX !="" &&gameConfig.status==='gameover'){
     fill(0,0,0,150);
     rect(0,0,gameConfig.screenX,gameConfig.screenY);
 
@@ -115,7 +133,7 @@ function game(){
 
 // change game status if any key is pressed
 function changeGameStatud(character){
-  if((keyDown(control.up) ||keyDown(control.left)||keyDown(control.right) )&& gameConfig.status==="start") {
+  if(&& gameConfig.status==="start") {
     world_start.play();
     initializeCharacterStatus(mario);
     gameConfig.status= "play";
@@ -279,19 +297,19 @@ function autoControl(character){
 function manualControl(character){
   
   if(character.live){
-    if(keyDown(control.left)){
+    if(keyDown(noseX < 300)){
       character.velocity.x-=gameConfig.moveSpeed;
       character.changeAnimation('move');
       character.mirrorX(-1);
     }
 
-    if(keyDown(control.right)){
+    if(keyDown(noseX > 300)){
       character.velocity.x+=gameConfig.moveSpeed;
       character.changeAnimation('move');
       character.mirrorX(1);
     }
 
-    if(!keyDown(control.left)&&!keyDown(control.right)&&!keyDown(control.up)){ 
+    if(!keyDown(noseX < 300)&&!keyDown(noseX > 300)&&!keyDown(noseY < 200)){ 
       character.changeAnimation('stand');
     }
   }
@@ -300,7 +318,7 @@ function manualControl(character){
 
 /* Movements of character */
 function jumping(character){
-	if( (keyWentDown(control.up)&&character.live) || (touchIsDown&&character.live) ){
+	if( (keyWentDown(noseY < 200)&&character.live) || (touchIsDown&&character.live) ){
 		character.velocity.y+=gameConfig.jump;
 	}
 }

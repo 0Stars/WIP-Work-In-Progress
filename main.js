@@ -42,10 +42,3 @@ function gotPoses(results)
 	}
 }
 
-function game(){
-
-	console.log("noseX = " + noseX +"noseY = " + noseY)
-	instializeInDraw();
-	moveEnvironment(mario);
-	drawSprites();
-}
